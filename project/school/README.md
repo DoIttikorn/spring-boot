@@ -91,9 +91,6 @@ Technical Details:
 }
 ```
 
-<div>
-<iframe width="560" height="315" src='https://dbdiagram.io/embed/63bbdf596afaa541e5d132bb'> </iframe>
-</div>
+## DATABASE DIGARM
 
-
-
+[dbdigarm.io](https://dbdiagram.io/d/63bbdf596afaa541e5d132bb)
