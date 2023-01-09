@@ -7,7 +7,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain
 
 @EnableWebFluxSecurity
 class SecurityConfig {
-    
+
     @Bean
     fun securityFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
         return http.authorizeExchange()
