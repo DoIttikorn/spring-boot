@@ -1,0 +1,26 @@
+spring:
+  cache:
+    type: redis
+    redis:
+      enable-statistics: off
+  security:
+    user:
+      name: dodo
+      password: dodo
+      roles:
+        - manager
+        - dev
+        - customer
+  r2dbc:
+    url: r2dbc:pool:postgresql://127.0.0.1:5432/school
+    username: dodo
+  devtools:
+    add-properties: true
+
+server:
+  port: 8080
+logging:
+  level:
+    root: info
+
+
