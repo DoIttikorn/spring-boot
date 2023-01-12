@@ -3,22 +3,24 @@ package com.edu.school.domain.teacher.configuration
 import com.edu.school.domain.teacher.TeacherHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.server.RouterFunction
 import org.springframework.web.reactive.function.server.router
 
 @Configuration
 class TeacherApiV1RouterConfiguration {
     @Bean
-    fun TeacherApiV1Router(
+    fun teacherApiV1Router(
         teacherHandler: TeacherHandler
     ): RouterFunction<*> = router {
-        "/api/teacher/v1"
-            .and(contentType(MediaType.APPLICATION_JSON)).and(accept(MediaType.APPLICATION_JSON))
-            .nest {
-                "".nest {
-                    GET("", teacherHandler::getTeacher)
+        "/api/teacher".nest {
+            "/v1".nest {
+                GET("", teacherHandler::getTeacherByQuery)
+                POST("", teacherHandler::createTeacher)
+                "/{teacherId}".nest {
+                    PUT("", teacherHandler::updateTeacherById)
+                    DELETE("", teacherHandler::removeTeacherById)
                 }
             }
+        }
     }
 }

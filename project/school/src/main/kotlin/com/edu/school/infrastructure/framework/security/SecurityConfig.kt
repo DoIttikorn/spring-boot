@@ -1,4 +1,4 @@
-package com.edu.school.infrastructure.security
+package com.edu.school.infrastructure.framework.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
