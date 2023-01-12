@@ -1,4 +1,4 @@
-package com.edu.school.domain.teacher.configuration
+package com.edu.school.configuration
 
 import com.edu.school.domain.teacher.TeacherHandler
 import org.springframework.context.annotation.Bean
