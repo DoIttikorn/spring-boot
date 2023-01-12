@@ -1,8 +1,12 @@
 package com.edu.school.domain.teacher
 
+import com.edu.school.domain.teacher.model.TeacherRequestBody
+import com.edu.school.domain.teacher.usecase.CreateTeacher
+import com.edu.school.infrastructure.framework.json.JsonMapper
 import com.edu.school.infrastructure.framework.web.handler.HandlerPattern.add
 import com.edu.school.infrastructure.framework.web.handler.HandlerPattern.find
 import com.edu.school.infrastructure.framework.web.handler.HandlerPattern.update
+import com.edu.school.infrastructure.framework.web.mapper.RequestBodyMapper
 import com.edu.school.infrastructure.framework.web.mapper.ServerResponseMapper
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -12,30 +16,36 @@ import reactor.core.publisher.Mono
 
 @Component
 class TeacherHandler(
+    private val createTeacher: CreateTeacher,
+    private val jsonMapper: JsonMapper,
+    private val requestBodyMapper: RequestBodyMapper,
     private val serverResponseMapper: ServerResponseMapper,
 ) {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
 
     fun getTeacherByQuery(request: ServerRequest): Mono<ServerResponse> {
+        log.info("get teacher start")
         return find(serverResponseMapper) {
             Mono.just("get Teacher")
         }
     }
 
     fun createTeacher(request: ServerRequest): Mono<ServerResponse> {
-        log.info("test create Teacher")
+        log.info("create teacher start")
         return add(serverResponseMapper) {
-            Mono.just("test create teacher")
+            requestBodyMapper.map<TeacherRequestBody>(request, TeacherRequestBody::class.java, jsonMapper)
+                .flatMap { requestBody -> createTeacher.execute(requestBody) }
         }
     }
-    fun updateTeacherById(request: ServerRequest) :Mono<ServerResponse> {
+
+    fun updateTeacherById(request: ServerRequest): Mono<ServerResponse> {
         return update(serverResponseMapper) {
             Mono.just("update teacher")
         }
     }
 
-    fun removeTeacherById(request: ServerRequest) : Mono<ServerResponse> {
+    fun removeTeacherById(request: ServerRequest): Mono<ServerResponse> {
         return update(serverResponseMapper) {
             Mono.just("delete teacher success")
         }
