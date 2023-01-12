@@ -5,6 +5,36 @@
 ### story: EXP01
 
 ```text
+ในฐานะอาจารย์ ฉันต้องการบันทึกข้อมูลอาจารย์ได้
+```
+
+Technical Details:
+
+- POST /api/teacher/v1
+- Request Body
+
+```json
+{
+  "first name": "John",
+  "last name": "which",
+  "age": 25
+}
+```
+
+- Response Body
+
+```json
+{
+  "id": 1,
+  "first name": "Sudarud",
+  "last name": "Kidrak",
+  "age": 25
+}
+```
+
+### story: EXP01
+
+```text
 ในฐานะอาจารย์ ฉันต้องการเห็นรายชื่อนักเรียนที่รับผิดชอบ เพื่อติดตาม ผลการเรียน
 ```
 
