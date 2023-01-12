@@ -4,7 +4,6 @@ import com.edu.school.infrastructure.framework.exception.ApplicationException
 import com.edu.school.infrastructure.framework.json.JsonMapper
 import com.edu.school.infrastructure.framework.jsonBody
 import com.edu.school.infrastructure.framework.web.model.ServerResponseError
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseCookie
 import org.springframework.stereotype.Component
@@ -13,10 +12,9 @@ import reactor.core.publisher.Mono
 import java.lang.reflect.Type
 
 @Component
-class ServerResponseMapper {
-
-    @Autowired
-    private lateinit var jsonMapper: JsonMapper
+class ServerResponseMapper(
+    private val jsonMapper: JsonMapper
+) {
 
     fun responseMono(
         status: HttpStatus,
