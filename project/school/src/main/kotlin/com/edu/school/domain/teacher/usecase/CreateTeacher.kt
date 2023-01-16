@@ -2,7 +2,7 @@ package com.edu.school.domain.teacher.usecase
 
 import com.edu.school.domain.teacher.model.TeacherRequestBody
 import com.edu.school.domain.teacher.repository.TeacherRepositoryImpl
-import com.edu.school.infrastructure.database.table.Teacher
+import com.edu.school.domain.teacher.model.Teacher
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 
