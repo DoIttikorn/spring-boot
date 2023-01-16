@@ -1,32 +1,27 @@
 package com.edu.school.domain.teacher.usecase
 
 import com.edu.school.domain.teacher.model.TeacherRequestBody
-import com.edu.school.domain.teacher.model.TeacherResponseBody
+import com.edu.school.domain.teacher.repository.TeacherRepositoryImpl
+import com.edu.school.infrastructure.database.table.Teacher
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
-import java.util.*
 
 @Service
-class CreateTeacher {
-    //    TODO: replace database
-    val data: HashMap<UUID, TeacherResponseBody> = hashMapOf()
-
-    fun execute(requestBody: TeacherRequestBody): Mono<TeacherResponseBody> {
-        val id = UUID.randomUUID()
-        data[id] = TeacherResponseBody(
-            id = UUID.randomUUID(),
-            firstName = requestBody.firstName,
-            lastName = requestBody.lastName,
-            age = requestBody.age
+class CreateTeacher(
+    private val teacherRepository: TeacherRepositoryImpl
+) {
+    fun execute(teacherRequestBody: TeacherRequestBody): Mono<Teacher> {
+        val teacher = Teacher(
+            firstName = teacherRequestBody.firstName,
+            lastName = teacherRequestBody.lastName,
+            age = teacherRequestBody.age,
+            email = teacherRequestBody.email,
+            created_at = null,
+            updated_at = null
         )
+        return teacherRepository.save(teacher)
 
-        return Mono.just(
-            TeacherResponseBody(
-                id = id,
-                firstName = requestBody.firstName,
-                lastName = requestBody.lastName,
-                age = requestBody.age
-            )
-        )
     }
+
+
 }
