@@ -8,7 +8,7 @@ plugins {
     id("org.springframework.boot") version "3.0.1"
     id("io.spring.dependency-management") version "1.1.0"
     id("org.graalvm.buildtools.native") version "0.9.18"
-    id("org.liquibase.gradle") version "2.1.1"
+//    id("org.liquibase.gradle") version "2.1.1"
     kotlin("jvm") version "1.7.22"
     kotlin("plugin.spring") version "1.7.22"
 }
@@ -25,6 +25,7 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://plugins.gradle.org/m2/") }
 }
 
 dependencies {
@@ -79,7 +80,7 @@ tasks.withType<Test> {
 //    activities.register("main") {
 //        val contexts: String = project.extra.properties["contexts"] as String ?: "default"
 //        this.arguments = mapOf(
-//            "changeLogFile" to "src/main/resources/db/changelog/db.changelog-master.yaml",
+//            "changeLogFile" to "src/main/resources/db/db/db.db-master.yaml",
 //            "url" to "jdbc:postgresql://localhost:5432/school",
 //            "username" to "dodo",
 //            "contexts" to contexts

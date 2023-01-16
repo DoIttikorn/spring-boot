@@ -1,4 +1,18 @@
 spring:
+  application:
+    name: school-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/school
+    username: dodo
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:db/db.changelog-master.yml
+    url: jdbc:postgresql://localhost:5432/school
+    user: dodo
+  r2dbc:
+    url: r2dbc:postgresql://127.0.0.1:5432/school
+    username: dodo
   cache:
     type: redis
     redis:
@@ -11,9 +25,6 @@ spring:
         - manager
         - dev
         - customer
-  r2dbc:
-    url: r2dbc:pool:postgresql://127.0.0.1:5432/school
-    username: dodo
   devtools:
     add-properties: true
 
