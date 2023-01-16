@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 
 data class TeacherRequestBody(
-    @JsonProperty("first name") val firstName: String,
-    @JsonProperty("last name") val lastName: String,
-    @JsonProperty("age") val age: Int,
+    @JsonProperty("first_name") val firstName: String,
+    @JsonProperty("last_name") val lastName: String,
+    @JsonProperty("age") val age: Int?,
+    @JsonProperty("email") val email: String?,
 )
