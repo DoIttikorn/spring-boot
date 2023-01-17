@@ -1,8 +1,9 @@
 package com.edu.school.domain.teacher.repository
 
-import org.springframework.stereotype.Repository
+import com.edu.school.domain.teacher.model.Teacher
+import reactor.core.publisher.Mono
 
-@Repository
 interface TeacherRepository {
+    fun save(teacher: Teacher): Mono<Teacher>
 
 }
