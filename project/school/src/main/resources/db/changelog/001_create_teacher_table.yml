@@ -34,11 +34,10 @@ databaseChangeLog:
                   type: VARCHAR(50)
                   constraints:
                     nullable: true
+
               - column:
                   name: created_at
                   type: DATETIME
-                  defaultValueComputed: CURRENT_TIMESTAMP
               - column:
                   name: updated_at
                   type: DATETIME
-                  defaultValueComputed: CURRENT_TIMESTAMP
