@@ -36,6 +36,7 @@ class TeacherHandler(
         return add(serverResponseMapper) {
             requestBodyMapper.map<TeacherRequestBody>(request, TeacherRequestBody::class.java, jsonMapper)
                 .flatMap { requestBody -> createTeacher.execute(requestBody) }
+                .doOnNext { log.info("create teacher end") }
         }
     }
 
