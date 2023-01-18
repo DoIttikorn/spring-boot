@@ -80,7 +80,7 @@ tasks.withType<Test> {
 //    activities.register("main") {
 //        val contexts: String = project.extra.properties["contexts"] as String ?: "default"
 //        this.arguments = mapOf(
-//            "changeLogFile" to "src/main/resources/db/db/db.db-master.yaml",
+//            "changeLogFile" to "src/main/resources/db.db/db.db/db.db.db.db-master.yaml",
 //            "url" to "jdbc:postgresql://localhost:5432/school",
 //            "username" to "dodo",
 //            "contexts" to contexts
