@@ -5,5 +5,5 @@ import reactor.core.publisher.Mono
 
 interface TeacherRepository {
     fun save(teacher: Teacher): Mono<Teacher>
-
+    fun findById(id: Long): Mono<Teacher>
 }

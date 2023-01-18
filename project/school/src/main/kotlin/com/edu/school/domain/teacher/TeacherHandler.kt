@@ -2,6 +2,7 @@ package com.edu.school.domain.teacher
 
 import com.edu.school.domain.teacher.model.TeacherRequestBody
 import com.edu.school.domain.teacher.usecase.CreateTeacher
+import com.edu.school.domain.teacher.usecase.GetTeacher
 import com.edu.school.infrastructure.framework.json.JsonMapper
 import com.edu.school.infrastructure.framework.web.handler.HandlerPattern.add
 import com.edu.school.infrastructure.framework.web.handler.HandlerPattern.find
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
 
 @Component
 class TeacherHandler(
@@ -20,6 +22,7 @@ class TeacherHandler(
     private val jsonMapper: JsonMapper,
     private val requestBodyMapper: RequestBodyMapper,
     private val serverResponseMapper: ServerResponseMapper,
+    private val getTeacher: GetTeacher,
 ) {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
@@ -28,6 +31,15 @@ class TeacherHandler(
         log.info("get teacher start")
         return find(serverResponseMapper) {
             Mono.just("get Teacher")
+        }
+    }
+
+    fun getTeacherById(request: ServerRequest): Mono<ServerResponse> {
+        log.info("get teacher start")
+        return find(serverResponseMapper) {
+            request.pathVariable("teacherId").toLong().toMono()
+                .flatMap { teacherId -> getTeacher.executeWithId(teacherId) }
+                .doOnNext { log.info("get teacher end") }
         }
     }
 

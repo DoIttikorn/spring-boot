@@ -5,7 +5,7 @@ import com.edu.school.domain.teacher.model.TeacherRequestBody
 import com.edu.school.domain.teacher.repository.TeacherRepository
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
-import java.util.Date
+import java.time.LocalDateTime
 
 @Service
 class CreateTeacher(
@@ -17,8 +17,8 @@ class CreateTeacher(
             lastName = teacherRequestBody.lastName,
             age = teacherRequestBody.age,
             email = teacherRequestBody.email,
-            createdAt = Date(System.currentTimeMillis()),
-            updatedAt = Date(System.currentTimeMillis()),
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now(),
         )
         return repository.save(teacher)
     }

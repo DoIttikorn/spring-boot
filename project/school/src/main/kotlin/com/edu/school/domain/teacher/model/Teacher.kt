@@ -2,26 +2,21 @@ package com.edu.school.domain.teacher.model
 
 import com.edu.school.infrastructure.database.model.Status
 import org.springframework.data.annotation.Id
-import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
+import java.time.LocalDateTime
 import java.util.*
 
 @Table("teacher")
 data class Teacher(
     @Id
-    var id: Int = 0,
-    @Column("first_name")
+    var id: Long = 0,
     var firstName: String,
-    @Column("last_name")
     var lastName: String,
-    @Column("age")
     var age: Int?,
     var email: String?,
     var status: String = Status.ACTIVE.value,
-    @Column("created_at")
-    var createdAt: Date,
-    @Column("updated_at")
-    var updatedAt: Date,
+    var createdAt: LocalDateTime,
+    var updatedAt: LocalDateTime,
 )
 
 //@JsonFormat
