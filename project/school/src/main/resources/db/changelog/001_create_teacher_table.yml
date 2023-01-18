@@ -34,7 +34,13 @@ databaseChangeLog:
                   type: VARCHAR(50)
                   constraints:
                     nullable: true
-
+              - column:
+                  name: status
+                  type: CHAR(1)
+                  constraints:
+                    nullable: false
+                    defaultValue: "A"
+                    comments: "A = Active, I = Inactive, D = Deleted"
               - column:
                   name: created_at
                   type: DATETIME
