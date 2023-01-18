@@ -1,4 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: 001_create_teacher_table.yml
-      relativeToChangelogFile: true
