@@ -3,6 +3,7 @@ package com.edu.school.domain.teacher
 import com.edu.school.domain.teacher.model.Teacher
 import com.edu.school.domain.teacher.model.TeacherRequestBody
 import com.edu.school.domain.teacher.usecase.CreateTeacher
+import com.edu.school.domain.teacher.usecase.DeleteTeacher
 import com.edu.school.domain.teacher.usecase.GetTeacher
 import com.edu.school.domain.teacher.usecase.UpdateTeacher
 import com.edu.school.infrastructure.framework.json.JsonMapper
@@ -24,6 +25,7 @@ import reactor.kotlin.core.publisher.toMono
 class TeacherHandler(
     private val createTeacher: CreateTeacher,
     private val updateTeacher: UpdateTeacher,
+    private val deleteTeacher: DeleteTeacher,
     private val jsonMapper: JsonMapper,
     private val requestBodyMapper: RequestBodyMapper,
     private val serverResponseMapper: ServerResponseMapper,
@@ -79,7 +81,9 @@ class TeacherHandler(
 
     fun removeTeacherById(request: ServerRequest): Mono<ServerResponse> {
         return update(serverResponseMapper) {
-            Mono.just("delete teacher success")
+            request.pathVariable("teacherId").toLong().toMono()
+                .flatMap { teacherId -> deleteTeacher.executeWithId(teacherId) }
+                .doOnNext { log.info("delete teacher end") }
         }
     }
 }

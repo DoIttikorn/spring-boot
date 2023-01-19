@@ -9,4 +9,5 @@ interface TeacherRepository {
     fun save(teacher: Teacher): Mono<Teacher>
     fun findById(id: Long): Mono<Teacher>
     fun findAll(sort: Sort): Flux<Teacher>
+    fun deleteById(id: Long): Mono<Void>
 }
