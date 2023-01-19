@@ -4,7 +4,9 @@ import com.edu.school.domain.teacher.model.Teacher
 import com.edu.school.domain.teacher.model.TeacherRequestBody
 import com.edu.school.domain.teacher.usecase.CreateTeacher
 import com.edu.school.domain.teacher.usecase.GetTeacher
+import com.edu.school.domain.teacher.usecase.UpdateTeacher
 import com.edu.school.infrastructure.framework.json.JsonMapper
+import com.edu.school.infrastructure.framework.utils.KTuple2
 import com.edu.school.infrastructure.framework.web.handler.HandlerPattern.add
 import com.edu.school.infrastructure.framework.web.handler.HandlerPattern.find
 import com.edu.school.infrastructure.framework.web.handler.HandlerPattern.update
@@ -21,6 +23,7 @@ import reactor.kotlin.core.publisher.toMono
 @Component
 class TeacherHandler(
     private val createTeacher: CreateTeacher,
+    private val updateTeacher: UpdateTeacher,
     private val jsonMapper: JsonMapper,
     private val requestBodyMapper: RequestBodyMapper,
     private val serverResponseMapper: ServerResponseMapper,
@@ -28,12 +31,6 @@ class TeacherHandler(
 ) {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
-
-    fun getTeacherByQuery(request: ServerRequest): Mono<ServerResponse> {
-        return find(serverResponseMapper) {
-            Mono.just("get Teacher")
-        }
-    }
 
     fun getTeacherAll(request: ServerRequest): Mono<ServerResponse> {
         log.info("get teacher start")
@@ -63,7 +60,20 @@ class TeacherHandler(
 
     fun updateTeacherById(request: ServerRequest): Mono<ServerResponse> {
         return update(serverResponseMapper) {
-            Mono.just("update teacher")
+            request.pathVariable("teacherId").toLong().toMono()
+                .flatMap { teacherId ->
+                    Mono.zip(
+                        teacherId.toMono(),
+                        requestBodyMapper.map<TeacherRequestBody>(request, TeacherRequestBody::class.java, jsonMapper),
+                    )
+                }
+                .map {
+                    KTuple2.from(it)
+                }
+                .flatMap { (teacherId, requestBody) ->
+                    updateTeacher.execute(teacherId, requestBody)
+                }
+                .doOnNext { log.info("update teacher end") }
         }
     }
 
