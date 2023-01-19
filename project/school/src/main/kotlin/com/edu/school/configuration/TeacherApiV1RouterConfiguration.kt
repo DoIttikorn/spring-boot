@@ -14,7 +14,7 @@ class TeacherApiV1RouterConfiguration {
     ): RouterFunction<*> = router {
         "/api/teacher".nest {
             "/v1".nest {
-                GET("", teacherHandler::getTeacherByQuery)
+                GET("", teacherHandler::getTeacherAll)
                 POST("", teacherHandler::createTeacher)
                 "/{teacherId}".nest {
                     GET("", teacherHandler::getTeacherById)

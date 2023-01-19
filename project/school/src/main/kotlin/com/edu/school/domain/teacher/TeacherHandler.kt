@@ -1,5 +1,6 @@
 package com.edu.school.domain.teacher
 
+import com.edu.school.domain.teacher.model.Teacher
 import com.edu.school.domain.teacher.model.TeacherRequestBody
 import com.edu.school.domain.teacher.usecase.CreateTeacher
 import com.edu.school.domain.teacher.usecase.GetTeacher
@@ -10,6 +11,7 @@ import com.edu.school.infrastructure.framework.web.handler.HandlerPattern.update
 import com.edu.school.infrastructure.framework.web.mapper.RequestBodyMapper
 import com.edu.school.infrastructure.framework.web.mapper.ServerResponseMapper
 import org.slf4j.LoggerFactory
+import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
@@ -28,11 +30,18 @@ class TeacherHandler(
     private val log = LoggerFactory.getLogger(this.javaClass)
 
     fun getTeacherByQuery(request: ServerRequest): Mono<ServerResponse> {
-        log.info("get teacher start")
         return find(serverResponseMapper) {
             Mono.just("get Teacher")
         }
     }
+
+    fun getTeacherAll(request: ServerRequest): Mono<ServerResponse> {
+        log.info("get teacher start")
+        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(
+            getTeacher.executeAll(), Teacher::class.java
+        )
+    }
+
 
     fun getTeacherById(request: ServerRequest): Mono<ServerResponse> {
         log.info("get teacher start")

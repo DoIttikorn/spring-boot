@@ -1,11 +1,11 @@
 package com.edu.school.domain.teacher.repository
 
-import com.edu.school.domain.teacher.model.Teacher
 import com.edu.school.infrastructure.database.repository.RepositoryFramework
 import org.springframework.context.annotation.Primary
 import org.springframework.data.r2dbc.repository.Query
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Mono
+import com.edu.school.domain.teacher.model.Teacher
 
 @Primary
 @Repository

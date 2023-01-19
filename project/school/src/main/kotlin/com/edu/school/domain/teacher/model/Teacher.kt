@@ -18,11 +18,3 @@ data class Teacher(
     var createdAt: LocalDateTime,
     var updatedAt: LocalDateTime,
 )
-
-//@JsonFormat
-//        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss.sss")
-
-// @JsonSerialize
-//        (using = DateFormat.Serializer::class)
-//    @JsonDeserialize
-//        (using = DateFormat.Deserializer::class)
