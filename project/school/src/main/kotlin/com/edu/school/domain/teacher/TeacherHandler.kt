@@ -37,9 +37,10 @@ class TeacherHandler(
     private val log = LoggerFactory.getLogger(this.javaClass)
 
     fun getTeacherAll(request: ServerRequest): Mono<ServerResponse> {
-        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(
-            getTeacher.executeAll(), Teacher::class.java
-        ).doFirst { log.info("start getTeacherAll") }
+        return ServerResponse.ok()
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(getTeacher.executeAll(), Teacher::class.java)
+            .doFirst { log.info("start getTeacherAll") }
     }
 
 
