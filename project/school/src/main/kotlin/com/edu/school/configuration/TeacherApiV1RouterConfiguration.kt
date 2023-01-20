@@ -18,7 +18,7 @@ class TeacherApiV1RouterConfiguration {
                 POST("", teacherHandler::createTeacher)
                 "/{teacherId}".nest {
                     GET("", teacherHandler::getTeacherById)
-                    PUT("", teacherHandler::updateTeacherById)
+                    PATCH("", teacherHandler::updateTeacherById)
                     DELETE("", teacherHandler::removeTeacherById)
                 }
             }
