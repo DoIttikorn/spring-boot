@@ -89,20 +89,34 @@ Technical Details:
   "last name": "which",
   "email": "e@gmail.com",
   "status": "Y",
-  "age": 25
+  "age": 25,
+  "created date": "2020-01-01 00:00:00",
+  "updated date": "2020-01-01 00:00:00"
 }
 ```
 
 ### story: EXP04
 
 ```text
-ในฐานะอาจารย์ ฉันต้องการเห็นรายชื่อนักเรียนที่รับผิดชอบ เพื่อติดตาม ผลการเรียน
+ในฐานะอาจารย์ ฉันต้องการลบข้อมูลอาจารย์ได้
 ```
 
 Technical Details:
 
-- GET /api/teacher/1/student
-- :id = 1
+- DELETE /api/teacher/v1/:id
+- Response Return Status Code 200
+
+---
+
+### story: EXP05
+
+```text
+ในฐานะอาจารย์ ฉันต้องการเห็นรายชื่อนักเรียนที่รับผิดชอบ เพื่อติดตามผลการเรียน
+```
+
+Technical Details:
+
+- GET /api/teacher/v1/{teacherId}/student
 - Response Body
 
 ```json
@@ -122,7 +136,7 @@ Technical Details:
 ]
 ```
 
-### story: EXP02
+### story: EXP06
 
 ```text
 ในฐานะอาจารย์ ฉันต้องการบันทึกนักเรียนที่ฉันรับผิดชอบใหม่เข้าไปได้
@@ -130,7 +144,7 @@ Technical Details:
 
 Technical Details:
 
-- POST /api/teacher/1/student
+- POST /api/teacher/v1/{teacherId}/student
 - Request Body
 
 ```json
@@ -152,7 +166,7 @@ Technical Details:
 }
 ```
 
-### story: EXP03
+### story: EXP07
 
 ```text
 ในฐานะอาจารย์ ฉันต้องการอัพเดรตข้อมูลนักเรียนได้
@@ -160,7 +174,7 @@ Technical Details:
 
 Technical Details:
 
-- PUT /api/teacher/1/student
+- PUT /api/teacher/{teacherId}/student/{teacherId}
 - Request Body
 
 ```json
@@ -181,6 +195,18 @@ Technical Details:
   "age": 21
 }
 ```
+
+
+### story: EXP08
+
+```text
+ในฐานะอาจารย์ ฉันต้องการลบรายชื่อนักเรียนออกจากรายชื่อที่อาจารย์ดูแลได้
+```
+
+Technical Details:
+
+- DELETE /api/teacher/v1/{teacherId}/student/{studentId}
+- Return Status Code 200
 
 ## DATABASE DIGARM
 
