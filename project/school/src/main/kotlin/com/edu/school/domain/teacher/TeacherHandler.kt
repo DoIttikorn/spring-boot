@@ -37,17 +37,16 @@ class TeacherHandler(
     private val log = LoggerFactory.getLogger(this.javaClass)
 
     fun getTeacherAll(request: ServerRequest): Mono<ServerResponse> {
-        log.info("get teacher start")
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(
             getTeacher.executeAll(), Teacher::class.java
-        )
+        ).doFirst { log.info("start getTeacherAll") }
     }
 
 
     fun getTeacherById(request: ServerRequest): Mono<ServerResponse> {
-        log.info("get teacher start")
         return find(serverResponseMapper) {
             request.pathVariable("teacherId").toLong().toMono()
+                .doFirst { log.info("get teacher start") }
                 .flatMap { teacherId -> getTeacher.executeWithId(teacherId) }
                 .switchIfEmpty { Mono.error(ResourceNotFoundException()) }
                 .doOnNext { log.info("get teacher end") }
@@ -55,9 +54,9 @@ class TeacherHandler(
     }
 
     fun createTeacher(request: ServerRequest): Mono<ServerResponse> {
-        log.info("create teacher start")
         return add(serverResponseMapper) {
             requestBodyMapper.map<TeacherRequestBody>(request, TeacherRequestBody::class.java, jsonMapper)
+                .doFirst { log.info("create teacher start") }
                 .flatMap { requestBody -> createTeacher.execute(requestBody) }
                 .doOnNext { log.info("create teacher end") }
         }
@@ -66,6 +65,7 @@ class TeacherHandler(
     fun updateTeacherById(request: ServerRequest): Mono<ServerResponse> {
         return update(serverResponseMapper) {
             request.pathVariable("teacherId").toLong().toMono()
+                .doFirst { log.info("update teacher start") }
                 .flatMap { teacherId ->
                     Mono.zip(
                         teacherId.toMono(),
@@ -85,8 +85,9 @@ class TeacherHandler(
     fun removeTeacherById(request: ServerRequest): Mono<ServerResponse> {
         return update(serverResponseMapper) {
             request.pathVariable("teacherId").toLong().toMono()
+                .doFirst { log.info("remove teacher start") }
                 .flatMap { teacherId -> deleteTeacher.executeWithId(teacherId) }
-                .doOnNext { log.info("delete teacher end") }
+                .doOnNext { log.info("remove teacher end") }
         }
     }
 }
