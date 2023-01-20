@@ -3,6 +3,7 @@ package com.edu.school.domain.teacher.usecase
 import com.edu.school.domain.teacher.model.Teacher
 import com.edu.school.domain.teacher.model.TeacherRequestBody
 import com.edu.school.domain.teacher.repository.TeacherRepository
+import com.edu.school.infrastructure.framework.exception.ResourceNotFoundException
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.switchIfEmpty
@@ -26,7 +27,7 @@ class UpdateTeacher(
                 )
             }
             .switchIfEmpty {
-                Mono.error(Exception("Teacher not found"))
+                Mono.error(ResourceNotFoundException())
             }
             .flatMap { repository.save(it) }
     }
