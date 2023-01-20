@@ -6,6 +6,7 @@ import com.edu.school.domain.teacher.usecase.CreateTeacher
 import com.edu.school.domain.teacher.usecase.DeleteTeacher
 import com.edu.school.domain.teacher.usecase.GetTeacher
 import com.edu.school.domain.teacher.usecase.UpdateTeacher
+import com.edu.school.infrastructure.framework.exception.ResourceNotFoundException
 import com.edu.school.infrastructure.framework.json.JsonMapper
 import com.edu.school.infrastructure.framework.utils.KTuple2
 import com.edu.school.infrastructure.framework.web.handler.HandlerPattern.add
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.switchIfEmpty
 import reactor.kotlin.core.publisher.toMono
 
 @Component
@@ -47,6 +49,7 @@ class TeacherHandler(
         return find(serverResponseMapper) {
             request.pathVariable("teacherId").toLong().toMono()
                 .flatMap { teacherId -> getTeacher.executeWithId(teacherId) }
+                .switchIfEmpty { Mono.error(ResourceNotFoundException()) }
                 .doOnNext { log.info("get teacher end") }
         }
     }
