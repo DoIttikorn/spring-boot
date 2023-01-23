@@ -102,6 +102,7 @@ tasks.withType<JacocoReport> {
 		}
 	)
 }
+// Running when `./gradlew test`
 tasks.test {
 	finalizedBy("jacocoTestReport")
 	doLast {

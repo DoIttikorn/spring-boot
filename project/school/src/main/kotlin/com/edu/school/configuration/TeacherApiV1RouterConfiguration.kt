@@ -12,15 +12,13 @@ class TeacherApiV1RouterConfiguration {
     fun teacherApiV1Router(
         teacherHandler: TeacherHandler
     ): RouterFunction<*> = router {
-        "/api/teacher".nest {
-            "/v1".nest {
-                GET("", teacherHandler::getTeacherAll)
-                POST("", teacherHandler::createTeacher)
-                "/{teacherId}".nest {
-                    GET("", teacherHandler::getTeacherById)
-                    PATCH("", teacherHandler::updateTeacherById)
-                    DELETE("", teacherHandler::removeTeacherById)
-                }
+        "/api/teacher/v1".nest {
+            GET("", teacherHandler::getTeacherAll)
+            POST("", teacherHandler::createTeacher)
+            "/{teacherId}".nest {
+                GET("", teacherHandler::getTeacherById)
+                PATCH("", teacherHandler::updateTeacherById)
+                DELETE("", teacherHandler::removeTeacherById)
             }
         }
     }
