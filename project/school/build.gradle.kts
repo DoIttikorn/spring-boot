@@ -64,10 +64,14 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	outputs.upToDateWhen { false } // show CreateTeacherTest > execute success() PASSED
+	// ref: https://docs.gradle.org/current/userguide/performance.html#suggestions_for_java_projects
+	maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
 
-//	maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
-//	testLogging {
-//		events("passed", "skipped", "failed")
-//		exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-//	}
+	testLogging {
+		events("passed", "skipped", "failed")
+		exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+	}
 }
+
+
