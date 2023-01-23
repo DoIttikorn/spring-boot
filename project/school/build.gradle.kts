@@ -9,6 +9,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.15.RELEASE"
 	kotlin("jvm") version "1.6.21"
 	kotlin("plugin.spring") version "1.6.21"
+	id("jacoco")
 }
 
 group = "com.edu"
@@ -75,3 +76,38 @@ tasks.withType<Test> {
 }
 
 
+/**
+ * @JacocoTestCoverage
+ *
+ * credits: -
+ * - https://reflectoring.io/jacoco/
+ * - https://github.com/gradle/kotlin-dsl/blob/master/samples/code-quality/build.gradle.kts
+ * - https://docs.gradle.org/current/userguide/jacoco_plugin.html
+ */
+
+jacoco {
+	toolVersion = "0.8.8"
+}
+tasks.jacocoTestReport {
+	reports {
+		xml.required.set(true)
+		csv.required.set(false)
+		html.outputLocation.set(layout.buildDirectory.dir("reports/coverage"))
+	}
+}
+tasks.withType<JacocoReport> {
+	classDirectories.setFrom(
+		sourceSets.main.get().output.asFileTree.matching {
+			include("**/domain/**")
+		}
+	)
+}
+tasks.test {
+	finalizedBy("jacocoTestReport")
+	doLast {
+		println("View code coverage at:")
+		println("file://$buildDir/reports/coverage/index.html")
+		println("View test results at:")
+		println("file://$buildDir/reports/tests/test/index.html")
+	}
+}
